@@ -151,8 +151,7 @@ export default function Orders() {
 
       {/* Main Table */}
       <div className="bg-card border border-border/40 rounded-2xl overflow-hidden shadow-sm">
-        <div className="overflow-x-auto">
-          <table className="w-full text-left border-collapse text-xs">
+
             <thead>
               <tr className="bg-secondary/10 border-b border-border/40">
                 <th className="p-4.5 font-bold text-muted-foreground uppercase tracking-wider">Order ID</th>

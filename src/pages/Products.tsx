@@ -57,6 +57,7 @@ export default function Products() {
   const [inStock, setInStock] = useState(false);
   const [page, setPage] = useState(1);
   const [sort, setSort] = useState("newest");
+  const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false);
 
   // Load Categories & Brands
   useEffect(() => {
@@ -151,11 +152,36 @@ export default function Products() {
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+      
+      {/* Mobile Filter Backdrop */}
+      {mobileFiltersOpen && (
+        <div 
+          onClick={() => setMobileFiltersOpen(false)} 
+          className="lg:hidden fixed inset-0 bg-black/60 backdrop-blur-sm z-40 transition-opacity"
+        />
+      )}
+
       <div className="flex flex-col lg:flex-row gap-10">
         
-        {/* SIDEBAR FILTERS */}
-        <aside className="w-full lg:w-64 flex-shrink-0 space-y-8">
-          <div className="flex items-center justify-between border-b border-border pb-4">
+        {/* SIDEBAR FILTERS (Permanent on Desktop, Drawer on Mobile) */}
+        <aside className={`
+          fixed inset-y-0 left-0 w-80 max-w-[85vw] bg-card border-r border-border/40 p-6 z-50 transition-transform duration-300 overflow-y-auto lg:p-0 lg:border-none lg:relative lg:w-64 lg:h-auto lg:translate-x-0 lg:z-0 lg:overflow-visible
+          ${mobileFiltersOpen ? "translate-x-0" : "-translate-x-full lg:translate-x-0"}
+        `}>
+          {/* Mobile Filter Header */}
+          <div className="flex items-center justify-between border-b border-border pb-4 mb-6 lg:hidden">
+            <h2 className="font-display font-bold text-base flex items-center gap-2">
+              <SlidersHorizontal className="h-5 w-5 text-primary" /> Filters
+            </h2>
+            <button 
+              onClick={() => setMobileFiltersOpen(false)}
+              className="p-1 border border-border rounded-lg text-muted-foreground hover:text-foreground cursor-pointer"
+            >
+              <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" /></svg>
+            </button>
+          </div>
+
+          <div className="flex items-center justify-between border-b border-border pb-4 hidden lg:flex">
             <h2 className="font-display font-bold text-lg flex items-center gap-2">
               <SlidersHorizontal className="h-5 w-5 text-primary" /> Filters
             </h2>
@@ -164,85 +190,97 @@ export default function Products() {
             </button>
           </div>
 
-          {/* Search */}
-          <div className="space-y-2">
-            <label className="text-xs font-bold uppercase tracking-wider text-muted-foreground">Search</label>
-            <div className="relative">
+          <div className="space-y-6 mt-4 lg:mt-0">
+            {/* Search */}
+            <div className="space-y-2">
+              <label className="text-xs font-bold uppercase tracking-wider text-muted-foreground">Search</label>
+              <div className="relative">
+                <input
+                  type="text"
+                  value={search}
+                  onChange={(e) => setSearch(e.target.value)}
+                  placeholder="Model, brand..."
+                  className="w-full bg-card border border-border/80 rounded-xl px-4 py-2.5 pl-10 text-sm focus:outline-none focus:border-primary/50"
+                />
+                <Search className="absolute left-3.5 top-3.5 h-4 w-4 text-muted-foreground" />
+              </div>
+            </div>
+
+            {/* Categories */}
+            <div className="space-y-2.5">
+              <label className="text-xs font-bold uppercase tracking-wider text-muted-foreground">Category</label>
+              <select
+                value={selectedCategory}
+                onChange={(e) => { setSelectedCategory(e.target.value); setPage(1); }}
+                className="w-full bg-card border border-border/80 rounded-xl px-4 py-2.5 text-sm focus:outline-none"
+              >
+                <option value="">All Categories</option>
+                {categories.map(c => (
+                  <option key={c.id} value={c.id}>{c.name}</option>
+                ))}
+              </select>
+            </div>
+
+            {/* Brands */}
+            <div className="space-y-2.5">
+              <label className="text-xs font-bold uppercase tracking-wider text-muted-foreground">Brand</label>
+              <select
+                value={selectedBrand}
+                onChange={(e) => { setSelectedBrand(e.target.value); setPage(1); }}
+                className="w-full bg-card border border-border/80 rounded-xl px-4 py-2.5 text-sm focus:outline-none"
+              >
+                <option value="">All Brands</option>
+                {brands.map(b => (
+                  <option key={b.id} value={b.id}>{b.name}</option>
+                ))}
+              </select>
+            </div>
+
+            {/* Price Range */}
+            <div className="space-y-2.5">
+              <label className="text-xs font-bold uppercase tracking-wider text-muted-foreground">Price Range ($)</label>
+              <div className="flex items-center gap-3">
+                <input
+                  type="number"
+                  placeholder="Min"
+                  value={minPrice}
+                  onChange={(e) => { setMinPrice(e.target.value); setPage(1); }}
+                  className="w-full bg-card border border-border/80 rounded-xl px-3 py-2 text-sm focus:outline-none"
+                />
+                <span className="text-muted-foreground text-xs">to</span>
+                <input
+                  type="number"
+                  placeholder="Max"
+                  value={maxPrice}
+                  onChange={(e) => { setMaxPrice(e.target.value); setPage(1); }}
+                  className="w-full bg-card border border-border/80 rounded-xl px-3 py-2 text-sm focus:outline-none"
+                />
+              </div>
+            </div>
+
+            {/* Stock Toggle */}
+            <div className="flex items-center space-x-3 pt-2">
               <input
-                type="text"
-                value={search}
-                onChange={(e) => setSearch(e.target.value)}
-                placeholder="Model, brand..."
-                className="w-full bg-card border border-border/80 rounded-xl px-4 py-2.5 pl-10 text-sm focus:outline-none focus:border-primary/50"
+                type="checkbox"
+                id="inStockOnly"
+                checked={inStock}
+                onChange={(e) => { setInStock(e.target.checked); setPage(1); }}
+                className="h-4.5 w-4.5 rounded border-border text-primary focus:ring-primary/20 accent-primary"
               />
-              <Search className="absolute left-3.5 top-3.5 h-4 w-4 text-muted-foreground" />
+              <label htmlFor="inStockOnly" className="text-sm font-medium text-foreground cursor-pointer select-none">
+                In Stock Only
+              </label>
             </div>
           </div>
 
-          {/* Categories */}
-          <div className="space-y-2.5">
-            <label className="text-xs font-bold uppercase tracking-wider text-muted-foreground">Category</label>
-            <select
-              value={selectedCategory}
-              onChange={(e) => { setSelectedCategory(e.target.value); setPage(1); }}
-              className="w-full bg-card border border-border/80 rounded-xl px-4 py-2.5 text-sm focus:outline-none"
+          {/* Mobile Clear All button */}
+          <div className="pt-6 border-t border-border mt-6 lg:hidden">
+            <button 
+              onClick={() => { resetFilters(); setMobileFiltersOpen(false); }} 
+              className="w-full bg-secondary hover:bg-secondary/80 text-foreground py-2.5 rounded-xl text-xs font-bold flex items-center justify-center gap-1.5 transition-colors cursor-pointer"
             >
-              <option value="">All Categories</option>
-              {categories.map(c => (
-                <option key={c.id} value={c.id}>{c.name}</option>
-              ))}
-            </select>
-          </div>
-
-          {/* Brands */}
-          <div className="space-y-2.5">
-            <label className="text-xs font-bold uppercase tracking-wider text-muted-foreground">Brand</label>
-            <select
-              value={selectedBrand}
-              onChange={(e) => { setSelectedBrand(e.target.value); setPage(1); }}
-              className="w-full bg-card border border-border/80 rounded-xl px-4 py-2.5 text-sm focus:outline-none"
-            >
-              <option value="">All Brands</option>
-              {brands.map(b => (
-                <option key={b.id} value={b.id}>{b.name}</option>
-              ))}
-            </select>
-          </div>
-
-          {/* Price Range */}
-          <div className="space-y-2.5">
-            <label className="text-xs font-bold uppercase tracking-wider text-muted-foreground">Price Range ($)</label>
-            <div className="flex items-center gap-3">
-              <input
-                type="number"
-                placeholder="Min"
-                value={minPrice}
-                onChange={(e) => { setMinPrice(e.target.value); setPage(1); }}
-                className="w-full bg-card border border-border/80 rounded-xl px-3 py-2 text-sm focus:outline-none"
-              />
-              <span className="text-muted-foreground text-xs">to</span>
-              <input
-                type="number"
-                placeholder="Max"
-                value={maxPrice}
-                onChange={(e) => { setMaxPrice(e.target.value); setPage(1); }}
-                className="w-full bg-card border border-border/80 rounded-xl px-3 py-2 text-sm focus:outline-none"
-              />
-            </div>
-          </div>
-
-          {/* Stock Toggle */}
-          <div className="flex items-center space-x-3 pt-2">
-            <input
-              type="checkbox"
-              id="inStockOnly"
-              checked={inStock}
-              onChange={(e) => { setInStock(e.target.checked); setPage(1); }}
-              className="h-4.5 w-4.5 rounded border-border text-primary focus:ring-primary/20 accent-primary"
-            />
-            <label htmlFor="inStockOnly" className="text-sm font-medium text-foreground cursor-pointer select-none">
-              In Stock Only
-            </label>
+              <RotateCcw className="h-3.5 w-3.5" /> Clear All Filters
+            </button>
           </div>
         </aside>
 
@@ -252,6 +290,12 @@ export default function Products() {
             <p className="text-sm text-muted-foreground">
               Showing <span className="font-semibold text-foreground">{products.length}</span> of <span className="font-semibold text-foreground">{total}</span> items
             </p>
+            <button 
+              onClick={() => setMobileFiltersOpen(true)}
+              className="lg:hidden flex items-center gap-2 px-4 py-2 border border-border/80 rounded-xl text-xs font-bold text-muted-foreground hover:text-foreground cursor-pointer hover:bg-secondary/20 transition-all"
+            >
+              <SlidersHorizontal className="h-4 w-4 text-primary" /> Filters
+            </button>
           </div>
 
           {loading ? (

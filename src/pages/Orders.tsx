@@ -68,8 +68,8 @@ export default function Orders() {
           {orders.map((order) => (
             <div key={order.id} className="bg-card border border-border/40 rounded-2xl overflow-hidden shadow-sm">
               {/* Header */}
-              <div className="bg-secondary/20 border-b border-border/40 px-6 py-4 flex flex-wrap justify-between items-center gap-4 text-sm">
-                <div className="flex items-center space-x-6">
+              <div className="bg-secondary/20 border-b border-border/40 px-6 py-4 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 text-sm">
+                <div className="grid grid-cols-2 gap-4 sm:flex sm:items-center sm:space-x-6 w-full sm:w-auto">
                   <div>
                     <p className="text-xs text-muted-foreground font-light uppercase tracking-wider">Order Placed</p>
                     <p className="font-semibold mt-0.5">{new Date(order.createdAt).toLocaleDateString()}</p>
@@ -78,7 +78,7 @@ export default function Orders() {
                     <p className="text-xs text-muted-foreground font-light uppercase tracking-wider">Total Value</p>
                     <p className="font-semibold text-primary mt-0.5">${order.total.toFixed(2)}</p>
                   </div>
-                  <div>
+                  <div className="col-span-2 sm:col-span-1">
                     <p className="text-xs text-muted-foreground font-light uppercase tracking-wider">Order ID</p>
                     <p className="font-mono mt-0.5">#{order.id.slice(-8).toUpperCase()}</p>
                   </div>
@@ -118,7 +118,7 @@ export default function Orders() {
               </div>
 
               {/* Info footer */}
-              <div className="bg-secondary/10 px-6 py-4 border-t border-border/30 text-xs text-muted-foreground flex justify-between items-center">
+              <div className="bg-secondary/10 px-6 py-4 border-t border-border/30 text-xs text-muted-foreground flex flex-col sm:flex-row sm:justify-between sm:items-center gap-2">
                 <span>Shipping Address: <strong className="text-foreground">{order.address}, {order.city}</strong></span>
                 <span>Paid via: <strong className="text-foreground uppercase">{order.paymentMethod}</strong></span>
               </div>

@@ -1,4 +1,4 @@
-const API_BASE = "http://localhost:5000/api";
+const API_BASE = "https://adhunik-electric-backend.onrender.com/api";
 
 let authToken = localStorage.getItem("token") || "";
 
@@ -17,11 +17,11 @@ export function getToken() {
 
 async function request(endpoint: string, options: RequestInit = {}) {
   const headers = new Headers(options.headers || {});
-  
+
   if (authToken) {
     headers.set("Authorization", `Bearer ${authToken}`);
   }
-  
+
   if (options.body && !(options.body instanceof FormData)) {
     headers.set("Content-Type", "application/json");
   }
@@ -36,7 +36,7 @@ async function request(endpoint: string, options: RequestInit = {}) {
   }
 
   const data = await response.json();
-  
+
   if (!response.ok) {
     throw new Error(data.error || "Something went wrong");
   }
@@ -49,7 +49,7 @@ export const api = {
   seed: {
     run: () => request("/seed", { method: "POST" }),
   },
-  
+
   // AUTH
   auth: {
     register: (body: any) => request("/auth/register", { method: "POST", body: JSON.stringify(body) }),
