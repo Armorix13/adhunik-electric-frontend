@@ -1,8 +1,8 @@
 import { useState, useEffect } from "react";
 import api from "../../lib/api";
 import { useToast } from "../../components/ui/toast";
-import { 
-  Eye, X, Copy, Check, Search, Calendar, MapPin, 
+import {
+  Eye, X, Copy, Check, Search, Calendar, MapPin,
   CreditCard, ShoppingBag, User, ArrowRight, ShieldCheck
 } from "lucide-react";
 
@@ -10,7 +10,7 @@ export default function Orders() {
   const { toast } = useToast();
   const [orders, setOrders] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
-  
+
   // Filters & State
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedStatus, setSelectedStatus] = useState("all");
@@ -65,8 +65,8 @@ export default function Orders() {
   // Filter Logic
   const filteredOrders = orders.filter(o => {
     const matchesStatus = selectedStatus === "all" || o.status === selectedStatus;
-    const matchesSearch = searchQuery === "" || 
-      o.id.toLowerCase().includes(searchQuery.toLowerCase()) || 
+    const matchesSearch = searchQuery === "" ||
+      o.id.toLowerCase().includes(searchQuery.toLowerCase()) ||
       o.customerName.toLowerCase().includes(searchQuery.toLowerCase()) ||
       o.customerEmail.toLowerCase().includes(searchQuery.toLowerCase());
     return matchesStatus && matchesSearch;
@@ -133,11 +133,10 @@ export default function Orders() {
               <button
                 key={status}
                 onClick={() => setSelectedStatus(status)}
-                className={`px-4 py-2 rounded-xl text-xs font-bold transition-all flex items-center gap-2 cursor-pointer capitalize ${
-                  isActive 
-                    ? "bg-primary text-primary-foreground shadow-sm shadow-primary/10" 
-                    : "bg-secondary/30 text-muted-foreground hover:bg-secondary/60 hover:text-foreground"
-                }`}
+                className={`px-4 py-2 rounded-xl text-xs font-bold transition-all flex items-center gap-2 cursor-pointer capitalize ${isActive
+                  ? "bg-primary text-primary-foreground shadow-sm shadow-primary/10"
+                  : "bg-secondary/30 text-muted-foreground hover:bg-secondary/60 hover:text-foreground"
+                  }`}
               >
                 <span>{status}</span>
                 <span className={`text-[10px] px-1.5 py-0.5 rounded-md ${isActive ? "bg-white/20 text-white" : "bg-secondary/80 text-muted-foreground"}`}>
@@ -149,11 +148,12 @@ export default function Orders() {
         </div>
       </div>
 
-      {/* Main Table */}
-      <div className="bg-card border border-border/40 rounded-2xl overflow-hidden shadow-sm">
-
+      {/* Data Table */}
+      <div className="bg-card border border-border/60 rounded-2xl overflow-hidden">
+        <div className="overflow-x-auto">
+          <table className="w-full min-w-[1000px] text-left text-xs">
             <thead>
-              <tr className="bg-secondary/10 border-b border-border/40">
+              <tr className="border-b border-border/30 bg-secondary/20">
                 <th className="p-4.5 font-bold text-muted-foreground uppercase tracking-wider">Order ID</th>
                 <th className="p-4.5 font-bold text-muted-foreground uppercase tracking-wider">Customer</th>
                 <th className="p-4.5 font-bold text-muted-foreground uppercase tracking-wider">Date</th>
@@ -171,8 +171,8 @@ export default function Orders() {
                       <span className="font-bold text-foreground text-[11px]" title={o.id}>
                         {o.id}
                       </span>
-                      <button 
-                        onClick={() => copyToClipboard(o.id)} 
+                      <button
+                        onClick={() => copyToClipboard(o.id)}
                         className="text-muted-foreground hover:text-primary p-1 rounded hover:bg-secondary/50 opacity-0 group-hover:opacity-100 transition-opacity"
                         title="Copy Order ID"
                       >
@@ -213,8 +213,8 @@ export default function Orders() {
                     </select>
                   </td>
                   <td className="p-4.5 text-right">
-                    <button 
-                      onClick={() => setSelectedOrder(o)} 
+                    <button
+                      onClick={() => setSelectedOrder(o)}
                       className="p-2 border border-border/60 hover:text-primary hover:border-primary/40 rounded-xl transition-all cursor-pointer bg-card hover:bg-secondary/20 flex items-center gap-1.5 ml-auto text-[11px] font-bold"
                     >
                       <Eye className="h-3.5 w-3.5" /> View Details
@@ -244,7 +244,7 @@ export default function Orders() {
                 <p className="text-[10px] font-mono text-muted-foreground uppercase tracking-widest">Order Specification</p>
                 <h3 className="font-display font-extrabold text-lg text-foreground flex items-center gap-2">
                   #{selectedOrder.id}
-                  <button 
+                  <button
                     onClick={() => copyToClipboard(selectedOrder.id)}
                     className="p-1 text-muted-foreground hover:text-primary hover:bg-secondary/50 rounded transition-colors"
                   >
@@ -252,8 +252,8 @@ export default function Orders() {
                   </button>
                 </h3>
               </div>
-              <button 
-                onClick={() => setSelectedOrder(null)} 
+              <button
+                onClick={() => setSelectedOrder(null)}
                 className="p-1.5 hover:bg-secondary/50 rounded-xl transition-colors text-muted-foreground hover:text-foreground cursor-pointer"
               >
                 <X className="h-5 w-5" />
@@ -266,16 +266,16 @@ export default function Orders() {
               <div className="flex justify-between items-center relative py-2">
                 {/* Connector line */}
                 <div className="absolute left-0 right-0 h-0.5 bg-border top-1/2 -translate-y-1/2 z-0" />
-                
+
                 {/* Active fill line */}
-                <div 
+                <div
                   className="absolute left-0 h-0.5 bg-primary top-1/2 -translate-y-1/2 z-0 transition-all duration-500"
                   style={{
-                    width: 
+                    width:
                       selectedOrder.status === "pending" ? "0%" :
-                      selectedOrder.status === "paid" ? "33%" :
-                      selectedOrder.status === "shipped" ? "66%" :
-                      selectedOrder.status === "delivered" ? "100%" : "0%"
+                        selectedOrder.status === "paid" ? "33%" :
+                          selectedOrder.status === "shipped" ? "66%" :
+                            selectedOrder.status === "delivered" ? "100%" : "0%"
                   }}
                 />
 
@@ -293,11 +293,10 @@ export default function Orders() {
 
                   return (
                     <div key={step.key} className="flex flex-col items-center z-10 text-center space-y-2">
-                      <div className={`h-7 w-7 rounded-full flex items-center justify-center font-bold text-xs transition-all ${
-                        isCompleted 
-                          ? "bg-primary text-primary-foreground ring-4 ring-primary/15" 
-                          : "bg-card border border-border text-muted-foreground"
-                      }`}>
+                      <div className={`h-7 w-7 rounded-full flex items-center justify-center font-bold text-xs transition-all ${isCompleted
+                        ? "bg-primary text-primary-foreground ring-4 ring-primary/15"
+                        : "bg-card border border-border text-muted-foreground"
+                        }`}>
                         {isCompleted ? <ShieldCheck className="h-4 w-4" /> : idx + 1}
                       </div>
                       <span className={`text-[10px] font-bold ${isActive ? "text-primary" : "text-muted-foreground"}`}>{step.label}</span>
@@ -378,9 +377,9 @@ export default function Orders() {
                 {selectedOrder.items?.map((item: any, idx: number) => (
                   <div key={idx} className="p-4 flex items-center gap-4 bg-card hover:bg-secondary/5 transition-colors">
                     <div className="h-14 w-14 bg-muted/20 border border-border/20 rounded-xl p-1 flex items-center justify-center flex-shrink-0">
-                      <img 
-                        src={item.productImage || "https://images.unsplash.com/photo-1572981779307-38b8cabb2407?w=150"} 
-                        alt={item.productName} 
+                      <img
+                        src={item.productImage || "https://images.unsplash.com/photo-1572981779307-38b8cabb2407?w=150"}
+                        alt={item.productName}
                         className="max-h-full object-contain mix-blend-multiply dark:mix-blend-normal"
                       />
                     </div>
@@ -413,8 +412,8 @@ export default function Orders() {
                   <option value="cancelled">Cancelled</option>
                 </select>
               </div>
-              
-              <button 
+
+              <button
                 onClick={() => setSelectedOrder(null)}
                 className="w-full sm:w-auto bg-primary hover:opacity-95 text-primary-foreground font-semibold px-6 py-2.5 rounded-xl transition-all shadow-sm shadow-primary/5 cursor-pointer text-center text-xs"
               >

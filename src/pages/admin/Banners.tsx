@@ -99,7 +99,7 @@ export default function Banners() {
       </div>
 
       <div className="bg-card border border-border/40 rounded-2xl overflow-x-auto shadow-sm">
-        <table className="w-full text-left border-collapse text-xs">
+        <table className="w-full min-w-[800px] text-left border-collapse text-xs">
           <thead>
             <tr className="bg-secondary/20 border-b border-border/40">
               <th className="p-4 font-bold text-muted-foreground uppercase">Title</th>
