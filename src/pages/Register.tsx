@@ -1,0 +1,129 @@
+import { useState } from "react";
+import { Link, useLocation } from "wouter";
+import { useAuth } from "../contexts/auth-context";
+import { useToast } from "../components/ui/toast";
+import { Mail, Key, User, Phone } from "lucide-react";
+
+export default function Register() {
+  const { register } = useAuth();
+  const { toast } = useToast();
+  const [, setLocation] = useLocation();
+
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [phone, setPhone] = useState("");
+  const [password, setPassword] = useState("");
+  const [loading, setLoading] = useState(false);
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!name || !email || !password) {
+      toast("Please fill in all mandatory fields", "error");
+      return;
+    }
+    setLoading(true);
+    try {
+      await register(email, password, name, phone || undefined);
+      toast("Account created successfully!");
+      setLocation("/");
+    } catch (err: any) {
+      toast(err.message || "Registration failed. Try again.", "error");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  return (
+    <div className="min-h-[80vh] flex items-center justify-center px-4 sm:px-6 lg:px-8 py-10 bg-background">
+      <div className="max-w-md w-full bg-card border border-border/40 rounded-3xl p-8 space-y-6 shadow-sm">
+        
+        {/* Title */}
+        <div className="text-center space-y-2">
+          <h2 className="font-display text-2xl md:text-3xl font-extrabold text-foreground">Create Account</h2>
+          <p className="text-xs text-muted-foreground">Join New Adhunik Electric to procure heavy electrical industrial components.</p>
+        </div>
+
+        {/* Form */}
+        <form onSubmit={handleSubmit} className="space-y-4">
+          <div className="space-y-1.5">
+            <label className="text-xs font-bold text-muted-foreground uppercase tracking-wider block">Full Name *</label>
+            <div className="relative">
+              <input
+                type="text"
+                required
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+                placeholder="John Doe"
+                className="w-full bg-secondary/35 border border-border/60 rounded-xl px-4 py-2.5 pl-10 text-sm focus:outline-none focus:border-primary/50"
+              />
+              <User className="absolute left-3.5 top-3.5 h-4 w-4 text-muted-foreground" />
+            </div>
+          </div>
+
+          <div className="space-y-1.5">
+            <label className="text-xs font-bold text-muted-foreground uppercase tracking-wider block">Email Address *</label>
+            <div className="relative">
+              <input
+                type="email"
+                required
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                placeholder="you@example.com"
+                className="w-full bg-secondary/35 border border-border/60 rounded-xl px-4 py-2.5 pl-10 text-sm focus:outline-none focus:border-primary/50"
+              />
+              <Mail className="absolute left-3.5 top-3.5 h-4 w-4 text-muted-foreground" />
+            </div>
+          </div>
+
+          <div className="space-y-1.5">
+            <label className="text-xs font-bold text-muted-foreground uppercase tracking-wider block">Phone Number (Optional)</label>
+            <div className="relative">
+              <input
+                type="text"
+                value={phone}
+                onChange={(e) => setPhone(e.target.value)}
+                placeholder="+91 98765 43210"
+                className="w-full bg-secondary/35 border border-border/60 rounded-xl px-4 py-2.5 pl-10 text-sm focus:outline-none focus:border-primary/50"
+              />
+              <Phone className="absolute left-3.5 top-3.5 h-4 w-4 text-muted-foreground" />
+            </div>
+          </div>
+
+          <div className="space-y-1.5">
+            <label className="text-xs font-bold text-muted-foreground uppercase tracking-wider block">Password *</label>
+            <div className="relative">
+              <input
+                type="password"
+                required
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                placeholder="Create secure password"
+                className="w-full bg-secondary/35 border border-border/60 rounded-xl px-4 py-2.5 pl-10 text-sm focus:outline-none focus:border-primary/50"
+              />
+              <Key className="absolute left-3.5 top-3.5 h-4 w-4 text-muted-foreground" />
+            </div>
+          </div>
+
+          <button
+            type="submit"
+            disabled={loading}
+            className="w-full bg-primary hover:opacity-95 text-primary-foreground font-semibold py-3 rounded-xl shadow-sm transition-all disabled:opacity-50 mt-6"
+          >
+            {loading ? "Registering..." : "Create Account"}
+          </button>
+        </form>
+
+        {/* Footer info */}
+        <div className="text-center pt-4 border-t border-border/30 text-xs">
+          <p className="text-muted-foreground">
+            Already have an account?{" "}
+            <Link href="/login" className="text-primary font-bold hover:underline">
+              Sign In Instead
+            </Link>
+          </p>
+        </div>
+
+      </div>
+    </div>
+  );
+}
