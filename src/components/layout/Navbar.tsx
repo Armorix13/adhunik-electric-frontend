@@ -25,16 +25,16 @@ export default function Navbar() {
   };
 
   return (
-    <header className="glass-header shadow-sm border-b border-border/40">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <header className="glass-header shadow-sm border-b border-border/40 overflow-hidden w-full">
+      <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-20">
           {/* Logo */}
           <div className="flex-shrink-0 flex items-center">
-            <Link href="/" className="flex items-center space-x-2">
-              <span className="text-[10px] bg-primary/10 border border-primary/20 text-primary font-bold px-2 py-0.5 rounded-md uppercase tracking-wider">
+            <Link href="/" className="flex items-center space-x-1.5">
+              <span className="hidden sm:inline text-[10px] bg-primary/10 border border-primary/20 text-primary font-bold px-2 py-0.5 rounded-md uppercase tracking-wider">
                 New
               </span>
-              <span className="font-display text-2xl font-bold tracking-tight text-primary">
+              <span className="font-display text-lg sm:text-2xl font-bold tracking-tight text-primary">
                 Adhunik<span className="text-foreground font-light">Electric</span>
               </span>
             </Link>
@@ -109,7 +109,7 @@ export default function Navbar() {
           </div>
 
           {/* Mobile menu button */}
-          <div className="flex md:hidden items-center space-x-4">
+          <div className="flex md:hidden items-center space-x-1">
             <button onClick={toggleTheme} className="p-2 text-muted-foreground">
               {theme === "dark" ? <Sun className="h-5 w-5 text-yellow-500" /> : <Moon className="h-5 w-5" />}
             </button>
@@ -132,7 +132,7 @@ export default function Navbar() {
 
       {/* Mobile Menu */}
       {mobileMenuOpen && (
-        <div className="md:hidden bg-card border-b border-border/80 px-4 pt-2 pb-6 space-y-3">
+        <div className="md:hidden bg-card border-b border-border/80 px-3 pt-2 pb-6 space-y-3 w-full overflow-hidden">
           <form onSubmit={handleSearch} className="relative mb-4">
             <input
               type="text"
