@@ -65,12 +65,15 @@ export default function AdminLayout({ children }: { children: ReactNode }) {
     <div className="min-h-screen bg-background text-foreground flex flex-col md:flex-row">
       {/* Mobile Top Header (only visible on mobile screens) */}
       <header className="md:hidden flex items-center justify-between px-6 py-4 bg-card border-b border-border/40 sticky top-0 z-40">
-        <Link href="/" className="flex items-center space-x-1.5">
-          <span className="text-[8px] bg-primary/10 border border-primary/20 text-primary font-bold px-1.5 py-0.5 rounded uppercase tracking-wider">
-            New
+        <Link href="/" className="flex items-center gap-2">
+          <span className="flex items-center justify-center h-7 w-7 rounded-lg bg-gradient-to-br from-primary to-primary/70 shadow-md shadow-primary/20 text-primary-foreground font-display font-black text-xs tracking-tight select-none">
+            Ms
           </span>
-          <span className="font-display text-base font-bold tracking-tight text-primary">
-            Adhunik<span className="text-foreground font-light">Electric</span>
+          <svg className="h-3.5 w-3.5 text-primary/70" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+            <path d="M13 2L4.09 12.97H11L10 22l8.91-10.97H13L14 2z" />
+          </svg>
+          <span className="font-display text-sm font-extrabold tracking-tight text-foreground leading-none">
+            Adhunik<span className="text-primary font-medium"> Electric</span>
           </span>
         </Link>
         
@@ -108,12 +111,15 @@ export default function AdminLayout({ children }: { children: ReactNode }) {
         <div className="space-y-8">
           {/* Logo / Header */}
           <div className="hidden md:flex items-center justify-between">
-            <Link href="/" className="flex items-center space-x-1.5">
-              <span className="text-[8px] bg-primary/10 border border-primary/20 text-primary font-bold px-1.5 py-0.5 rounded uppercase tracking-wider">
-                New
+            <Link href="/" className="flex items-center gap-2">
+              <span className="flex items-center justify-center h-7 w-7 rounded-lg bg-gradient-to-br from-primary to-primary/70 shadow-md shadow-primary/20 text-primary-foreground font-display font-black text-xs tracking-tight select-none">
+                Ms
               </span>
-              <span className="font-display text-base font-bold tracking-tight text-primary">
-                Adhunik<span className="text-foreground font-light">Electric</span>
+              <svg className="h-3.5 w-3.5 text-primary/70" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                <path d="M13 2L4.09 12.97H11L10 22l8.91-10.97H13L14 2z" />
+              </svg>
+              <span className="font-display text-sm font-extrabold tracking-tight text-foreground leading-none">
+                Adhunik<span className="text-primary font-medium"> Electric</span>
               </span>
               <span className="text-[8px] bg-accent/15 border border-accent/20 text-accent font-bold px-1.5 py-0.5 rounded uppercase">
                 Admin

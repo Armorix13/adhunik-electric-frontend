@@ -56,7 +56,7 @@ export default function Orders() {
         <div className="bg-card border border-border/40 rounded-2xl p-12 text-center space-y-5 shadow-sm">
           <Package className="h-12 w-12 text-muted-foreground mx-auto" />
           <h3 className="font-bold text-lg font-display">No Orders Found</h3>
-          <p className="text-sm text-muted-foreground">You haven't placed any orders with New Adhunik Electric yet.</p>
+          <p className="text-sm text-muted-foreground">You haven't placed any orders with Ms Adhunik Electric yet.</p>
           <Link href="/products">
             <button className="bg-primary text-primary-foreground text-xs font-semibold px-5 py-2.5 rounded-full">
               Explore Catalog

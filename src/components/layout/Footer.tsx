@@ -8,9 +8,15 @@ export default function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-4 gap-12">
           {/* Brand */}
           <div className="space-y-4">
-            <Link href="/" className="flex items-center space-x-2">
-              <span className="font-display text-2xl font-bold tracking-tight text-primary">
-                Adhunik<span className="text-foreground font-light">Electric</span>
+            <Link href="/" className="flex items-center gap-2 group">
+              <span className="flex items-center justify-center h-8 w-8 rounded-lg bg-gradient-to-br from-primary to-primary/70 shadow-md shadow-primary/25 text-primary-foreground font-display font-black text-sm tracking-tight select-none">
+                Ms
+              </span>
+              <svg className="h-4 w-4 text-primary/70" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                <path d="M13 2L4.09 12.97H11L10 22l8.91-10.97H13L14 2z" />
+              </svg>
+              <span className="font-display text-xl font-extrabold tracking-tight text-foreground leading-none">
+                Adhunik<span className="text-primary font-medium"> Electric</span>
               </span>
             </Link>
             <p className="text-sm text-muted-foreground leading-relaxed">
@@ -100,7 +106,7 @@ export default function Footer() {
 
         {/* Bottom Bar */}
         <div className="border-t border-border mt-16 pt-8 flex flex-col md:flex-row items-center justify-between text-xs text-muted-foreground">
-          <p>&copy; {new Date().getFullYear()} New Adhunik Electric. All rights reserved.</p>
+          <p>&copy; {new Date().getFullYear()} Ms Adhunik Electric. All rights reserved.</p>
           <div className="flex space-x-6 mt-4 md:mt-0">
             <span className="hover:text-primary cursor-pointer">Privacy Policy</span>
             <span className="hover:text-primary cursor-pointer">Terms of Service</span>

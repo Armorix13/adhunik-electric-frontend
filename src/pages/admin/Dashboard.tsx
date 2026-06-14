@@ -39,7 +39,7 @@ export default function Dashboard() {
     <div className="space-y-8 animate-fade-in">
       <div className="space-y-1">
         <h1 className="font-display text-2xl font-extrabold text-foreground">Dashboard</h1>
-        <p className="text-xs text-muted-foreground">Real-time stats monitor for New Adhunik Electric inventory and billing pipeline.</p>
+        <p className="text-xs text-muted-foreground">Real-time stats monitor for Ms Adhunik Electric inventory and billing pipeline.</p>
       </div>
 
       {/* Stats Cards */}

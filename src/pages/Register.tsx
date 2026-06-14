@@ -40,7 +40,7 @@ export default function Register() {
         {/* Title */}
         <div className="text-center space-y-2">
           <h2 className="font-display text-2xl md:text-3xl font-extrabold text-foreground">Create Account</h2>
-          <p className="text-xs text-muted-foreground">Join New Adhunik Electric to procure heavy electrical industrial components.</p>
+          <p className="text-xs text-muted-foreground">Join Ms Adhunik Electric to procure heavy electrical industrial components.</p>
         </div>
 
         {/* Form */}

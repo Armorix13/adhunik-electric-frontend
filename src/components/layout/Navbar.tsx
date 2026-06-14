@@ -30,12 +30,18 @@ export default function Navbar() {
         <div className="flex items-center justify-between h-20">
           {/* Logo */}
           <div className="flex-shrink-0 flex items-center">
-            <Link href="/" className="flex items-center space-x-1.5">
-              <span className="hidden sm:inline text-[10px] bg-primary/10 border border-primary/20 text-primary font-bold px-2 py-0.5 rounded-md uppercase tracking-wider">
-                New
+            <Link href="/" className="flex items-center gap-2 group">
+              {/* Ms badge */}
+              <span className="flex items-center justify-center h-8 w-8 rounded-lg bg-gradient-to-br from-primary to-primary/70 shadow-md shadow-primary/25 text-primary-foreground font-display font-black text-sm tracking-tight select-none group-hover:shadow-primary/40 transition-shadow">
+                Ms
               </span>
-              <span className="font-display text-lg sm:text-2xl font-bold tracking-tight text-primary">
-                Adhunik<span className="text-foreground font-light">Electric</span>
+              {/* Lightning bolt */}
+              <svg className="hidden sm:block h-4 w-4 text-primary/70" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                <path d="M13 2L4.09 12.97H11L10 22l8.91-10.97H13L14 2z" />
+              </svg>
+              {/* Brand name */}
+              <span className="font-display text-base sm:text-xl font-extrabold tracking-tight text-foreground leading-none">
+                Adhunik<span className="text-primary font-medium"> Electric</span>
               </span>
             </Link>
           </div>
